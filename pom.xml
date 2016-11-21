@@ -72,11 +72,7 @@
 			<artifactId>jasperreports</artifactId>
 			<version>4.0.2</version>
 		</dependency>
-		<dependency>
-			<groupId>com.t2tierp</groupId>
-			<artifactId>jasperreports-fonts</artifactId>
-			<version>1.0.0</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>xalan</groupId>
 			<artifactId>xalan</artifactId>
