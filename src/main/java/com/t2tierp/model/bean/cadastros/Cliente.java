@@ -91,6 +91,9 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "ID_OPERACAO_FISCAL", referencedColumnName = "ID")
     @ManyToOne
     private TributOperacaoFiscal tributOperacaoFiscal;
+    @JoinColumn(name = "ID_CONVENIO", referencedColumnName = "ID")
+    @ManyToOne
+    private Convenio convenio;
 
     public Cliente() {
     }
@@ -221,6 +224,14 @@ public class Cliente implements Serializable {
 
     public void setTributOperacaoFiscal(TributOperacaoFiscal tributOperacaoFiscal) {
         this.tributOperacaoFiscal = tributOperacaoFiscal;
+    }
+
+    public Convenio getConvenio() {
+        return convenio;
+    }
+
+    public void setConvenio(Convenio convenio) {
+        this.convenio = convenio;
     }
 
     @Override

@@ -28,11 +28,10 @@
 */
 package com.t2tierp.model.bean.cadastros;
 
-import com.t2tierp.model.bean.tributacao.TributGrupoTributario;
-import com.t2tierp.model.bean.tributacao.TributIcmsCustomCab;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,6 +43,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import com.t2tierp.model.bean.tributacao.TributGrupoTributario;
+import com.t2tierp.model.bean.tributacao.TributIcmsCustomCab;
 
 
 @Entity
@@ -76,6 +79,10 @@ public class Produto implements Serializable {
     private BigDecimal precoVendaMinimo;
     @Column(name = "PRECO_SUGERIDO")
     private BigDecimal precoSugerido;
+    @Column(name = "CUSTO_UNITARIO")
+    private BigDecimal custoUnitario;
+    @Column(name = "CUSTO_PRODUCAO")
+    private BigDecimal custoProducao;
     @Column(name = "CUSTO_MEDIO_LIQUIDO")
     private BigDecimal custoMedioLiquido;
     @Column(name = "PRECO_LUCRO_ZERO")
@@ -103,8 +110,8 @@ public class Produto implements Serializable {
     @Temporal(TemporalType.DATE)
     @Column(name = "DATA_CADASTRO")
     private Date dataCadastro;
-    @Column(name = "FOTO_PRODUTO")
-    private String fotoProduto;
+    @Column(name = "IMAGEM")
+    private String imagem;
     @Column(name = "EX_TIPI")
     private String exTipi;
     @Column(name = "CODIGO_LST")
@@ -138,12 +145,14 @@ public class Produto implements Serializable {
     private Date dataAlteracao;
     @Column(name = "TIPO")
     private String tipo;
+    @Column(name = "SERVICO")
+    private String servico;
     @JoinColumn(name = "ID_UNIDADE_PRODUTO", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private UnidadeProduto unidadeProduto;
-    @JoinColumn(name = "ID_SUB_GRUPO", referencedColumnName = "ID")
+    @JoinColumn(name = "ID_SUBGRUPO", referencedColumnName = "ID")
     @ManyToOne(optional = false)
-    private ProdutoSubGrupo produtoSubGrupo;
+    private ProdutoSubGrupo produtoSubgrupo;
     @JoinColumn(name = "ID_MARCA_PRODUTO", referencedColumnName = "ID")
     @ManyToOne
     private ProdutoMarca produtoMarca;
@@ -156,7 +165,9 @@ public class Produto implements Serializable {
     @JoinColumn(name = "ID_TRIBUT_ICMS_CUSTOM_CAB", referencedColumnName = "ID")
     @ManyToOne
     private TributIcmsCustomCab tributIcmsCustomCab;
-
+    @Transient
+    private BigDecimal encargosVenda;
+	
     public Produto() {
     }
 
@@ -246,6 +257,22 @@ public class Produto implements Serializable {
 
     public void setPrecoSugerido(BigDecimal precoSugerido) {
         this.precoSugerido = precoSugerido;
+    }
+
+    public BigDecimal getCustoUnitario() {
+        return custoUnitario;
+    }
+
+    public void setCustoUnitario(BigDecimal custoUnitario) {
+        this.custoUnitario = custoUnitario;
+    }
+
+    public BigDecimal getCustoProducao() {
+        return custoProducao;
+    }
+
+    public void setCustoProducao(BigDecimal custoProducao) {
+        this.custoProducao = custoProducao;
     }
 
     public BigDecimal getCustoMedioLiquido() {
@@ -352,12 +379,12 @@ public class Produto implements Serializable {
         this.dataCadastro = dataCadastro;
     }
 
-    public String getFotoProduto() {
-        return fotoProduto;
+    public String getImagem() {
+        return imagem;
     }
 
-    public void setFotoProduto(String fotoProduto) {
-        this.fotoProduto = fotoProduto;
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 
     public String getExTipi() {
@@ -488,6 +515,14 @@ public class Produto implements Serializable {
         this.tipo = tipo;
     }
 
+    public String getServico() {
+        return servico;
+    }
+
+    public void setServico(String servico) {
+        this.servico = servico;
+    }
+
     public UnidadeProduto getUnidadeProduto() {
         return unidadeProduto;
     }
@@ -495,16 +530,17 @@ public class Produto implements Serializable {
     public void setUnidadeProduto(UnidadeProduto unidadeProduto) {
         this.unidadeProduto = unidadeProduto;
     }
+   
 
-    public ProdutoSubGrupo getProdutoSubGrupo() {
-        return produtoSubGrupo;
-    }
+    public ProdutoSubGrupo getProdutoSubgrupo() {
+		return produtoSubgrupo;
+	}
 
-    public void setProdutoSubGrupo(ProdutoSubGrupo produtoSubGrupo) {
-        this.produtoSubGrupo = produtoSubGrupo;
-    }
+	public void setProdutoSubgrupo(ProdutoSubGrupo produtoSubgrupo) {
+		this.produtoSubgrupo = produtoSubgrupo;
+	}
 
-    public ProdutoMarca getProdutoMarca() {
+	public ProdutoMarca getProdutoMarca() {
         return produtoMarca;
     }
 
@@ -540,5 +576,13 @@ public class Produto implements Serializable {
     public String toString() {
         return "com.t2tierp.model.bean.cadastros.Produto[id=" + id + "]";
     }
+    
+    public BigDecimal getEncargosVenda() {
+        return encargosVenda;
+    }
 
+    public void setEncargosVenda(BigDecimal encargosVenda) {
+        this.encargosVenda = encargosVenda;
+    }
+    
 }

@@ -50,7 +50,7 @@ public class AgenciaBanco implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @Column(name = "CODIGO") 
+    @Column(name = "CODIGO")
     private String codigo;
     @Column(name = "DIGITO")
     private String digito;
@@ -72,8 +72,8 @@ public class AgenciaBanco implements Serializable {
     private String telefone;
     @Column(name = "GERENTE")
     private String gerente;
-    @Column(name = "EMPRESA_CONTATO")
-    private String empresaContato;
+    @Column(name = "CONTATO")
+    private String contato;
     @Column(name = "OBSERVACAO")
     private String observacao;
     @JoinColumn(name = "ID_BANCO", referencedColumnName = "ID")
@@ -179,12 +179,12 @@ public class AgenciaBanco implements Serializable {
         this.gerente = gerente;
     }
 
-    public String getEmpresaContato() {
-        return empresaContato;
+    public String getContato() {
+        return contato;
     }
 
-    public void setEmpresaContato(String empresaContato) {
-        this.empresaContato = empresaContato;
+    public void setContato(String contato) {
+        this.contato = contato;
     }
 
     public String getObservacao() {

@@ -28,6 +28,7 @@
 */
 package com.t2tierp.model.bean.cadastros;
 
+import com.t2tierp.model.bean.comissao.ComissaoPerfil;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Basic;
@@ -55,9 +56,16 @@ public class Vendedor implements Serializable {
     private BigDecimal comissao;
     @Column(name = "META_VENDAS")
     private BigDecimal metaVendas;
+    @Column(name = "GERENTE")
+    private String gerente;
+    @Column(name = "TAXA_GERENTE")
+    private BigDecimal taxaGerente;
     @JoinColumn(name = "ID_COLABORADOR", referencedColumnName = "ID")
     @ManyToOne
     private Colaborador colaborador;
+    @JoinColumn(name = "ID_COMISSAO_PERFIL", referencedColumnName = "ID")
+    @ManyToOne
+    private ComissaoPerfil comissaoPerfil;
 
     public Vendedor() {
     }
@@ -86,12 +94,36 @@ public class Vendedor implements Serializable {
         this.metaVendas = metaVendas;
     }
 
+    public String getGerente() {
+        return gerente;
+    }
+
+    public void setGerente(String gerente) {
+        this.gerente = gerente;
+    }
+
+    public BigDecimal getTaxaGerente() {
+        return taxaGerente;
+    }
+
+    public void setTaxaGerente(BigDecimal taxaGerente) {
+        this.taxaGerente = taxaGerente;
+    }
+
     public Colaborador getColaborador() {
         return colaborador;
     }
 
     public void setColaborador(Colaborador colaborador) {
         this.colaborador = colaborador;
+    }
+
+    public ComissaoPerfil getComissaoPerfil() {
+        return comissaoPerfil;
+    }
+
+    public void setComissaoPerfil(ComissaoPerfil comissaoPerfil) {
+        this.comissaoPerfil = comissaoPerfil;
     }
 
     @Override

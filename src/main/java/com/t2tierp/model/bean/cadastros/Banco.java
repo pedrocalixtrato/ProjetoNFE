@@ -29,7 +29,6 @@
 package com.t2tierp.model.bean.cadastros;
 
 import java.io.Serializable;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -95,5 +94,5 @@ public class Banco implements Serializable {
     public String toString() {
         return "com.t2tierp.model.bean.cadastros.Banco[id=" + id + "]";
     }
-    
+
 }

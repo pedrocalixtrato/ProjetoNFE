@@ -129,7 +129,7 @@ public class Empresa implements Serializable {
     @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID")
     @ManyToOne
     private Empresa empresa;
-    @OneToMany(mappedBy="empresa", fetch = FetchType.EAGER)
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="empresa")
     private Set<EmpresaEndereco> listaEndereco;
     @ManyToMany(fetch=FetchType.LAZY, mappedBy = "listaEmpresa")
     private Set<Pessoa> listaPessoa;
@@ -418,8 +418,8 @@ public class Empresa implements Serializable {
 	public void setListaPessoa(Set<Pessoa> listaPessoa) {
 		this.listaPessoa = listaPessoa;
 	}
-
-	@Override
+    
+    @Override
     public String toString() {
         return "com.t2tierp.model.bean.cadastros.Empresa[id=" + id + "]";
     }

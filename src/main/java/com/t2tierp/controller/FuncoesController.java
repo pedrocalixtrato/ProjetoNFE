@@ -44,22 +44,108 @@ public class FuncoesController implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private TreeNode rootNfe;
+	private TreeNode rootEmpresa;
+	private TreeNode rootCadastros;
+	private TreeNode rootVendas;
 	private TreeNode funcaoSelecionada;
 	private String pagina;
 	private String tituloJanela;
 	private boolean janelaVisivel = false;
 	
 	public FuncoesController() {  
-        rootNfe = new DefaultTreeNode("root", null);  
+        rootNfe = new DefaultTreeNode("root", null);
+        rootEmpresa = new DefaultTreeNode("root", null);  
+        rootCadastros = new DefaultTreeNode("root", null); 
+        rootVendas = new DefaultTreeNode("root", null);
         
         new DefaultTreeNode("document", new Funcao("Emissão", "/modulos/nfe/emissaoNfe.jsf"), rootNfe);
         new DefaultTreeNode("document", new Funcao("Status Serviço", "/modulos/nfe/statusServico.jsf"), rootNfe);
+        
+        new DefaultTreeNode("document", new Funcao("Empresa", "/modulos/cadastros/empresa/empresa.jsf"), rootEmpresa);
+        
+        
+        TreeNode pessoal = new DefaultTreeNode(new Funcao("Pessoal", null), rootCadastros);
+        
+        TreeNode pessoa = new DefaultTreeNode(new Funcao("Pessoa", null), pessoal);
+        new DefaultTreeNode("document", new Funcao("Pessoa", "/modulos/cadastros/pessoal/pessoa/pessoa.jsf"), pessoa);
+        new DefaultTreeNode("document", new Funcao("Estado Civil", "/modulos/cadastros/pessoal/pessoa/estadoCivil.jsf"), pessoa);
+        
+        TreeNode clienteFornecedorTransportadora = new DefaultTreeNode(new Funcao("Cliente | Fornecedor | Transportadora", null), pessoal);
+        new DefaultTreeNode("document", new Funcao("Atividade", "/modulos/cadastros/pessoal/clienteFornecedorTransportadora/atividadeForCli.jsf"), clienteFornecedorTransportadora);
+        new DefaultTreeNode("document", new Funcao("Situação", "/modulos/cadastros/pessoal/clienteFornecedorTransportadora/situacaoForCli.jsf"), clienteFornecedorTransportadora);
+        new DefaultTreeNode("document", new Funcao("Cliente", "/modulos/cadastros/pessoal/clienteFornecedorTransportadora/cliente.jsf"), clienteFornecedorTransportadora);
+        new DefaultTreeNode("document", new Funcao("Fornecedor", "/modulos/cadastros/pessoal/clienteFornecedorTransportadora/fornecedor.jsf"), clienteFornecedorTransportadora);
+        new DefaultTreeNode("document", new Funcao("Transportadora", "/modulos/cadastros/pessoal/clienteFornecedorTransportadora/transportadora.jsf"), clienteFornecedorTransportadora);
+        
+        TreeNode colaborador = new DefaultTreeNode(new Funcao("Colaborador", null), pessoal);
+        new DefaultTreeNode("document", new Funcao("Tipo Admissão", "/modulos/cadastros/pessoal/colaborador/tipoAdmissao.jsf"), colaborador);
+        new DefaultTreeNode("document", new Funcao("Tipo Relacionamento", "/modulos/cadastros/pessoal/colaborador/tipoRelacionamento.jsf"), colaborador);
+        new DefaultTreeNode("document", new Funcao("Situação", "/modulos/cadastros/pessoal/colaborador/situacaoColaborador.jsf"), colaborador);
+        new DefaultTreeNode("document", new Funcao("Tipo Desligamento", "/modulos/cadastros/pessoal/colaborador/tipoDesligamento.jsf"), colaborador);
+        new DefaultTreeNode("document", new Funcao("Tipo", "/modulos/cadastros/pessoal/colaborador/tipoColaborador.jsf"), colaborador);
+        new DefaultTreeNode("document", new Funcao("Cargo", "/modulos/cadastros/pessoal/colaborador/cargo.jsf"), colaborador);
+        new DefaultTreeNode("document", new Funcao("Nível Formação", "/modulos/cadastros/pessoal/colaborador/nivelFormacao.jsf"), colaborador);
+        new DefaultTreeNode("document", new Funcao("Colaborador", "/modulos/cadastros/pessoal/colaborador/colaborador.jsf"), colaborador);
+
+        TreeNode pessoalOutros = new DefaultTreeNode(new Funcao("Outros", null), pessoal);
+        new DefaultTreeNode("document", new Funcao("Contador", "/modulos/cadastros/pessoal/outros/contador.jsf"), pessoalOutros);
+        new DefaultTreeNode("document", new Funcao("Sindicato", "/modulos/cadastros/pessoal/outros/sindicato.jsf"), pessoalOutros);
+        new DefaultTreeNode("document", new Funcao("Convênio", "/modulos/cadastros/pessoal/outros/convenio.jsf"), pessoalOutros);
+        
+        TreeNode diversos = new DefaultTreeNode(new Funcao("Diversos", null), rootCadastros);
+        new DefaultTreeNode("document", new Funcao("Setor", "/modulos/cadastros/diversos/setor.jsf"), diversos);
+        new DefaultTreeNode("document", new Funcao("Almoxarifado", "/modulos/cadastros/diversos/almoxarifado.jsf"), diversos);
+        new DefaultTreeNode("document", new Funcao("Operadora Plano Saúde", "/modulos/cadastros/diversos/operadoraPlanoSaude.jsf"), diversos);
+        new DefaultTreeNode("document", new Funcao("Operadora Cartão", "/modulos/cadastros/diversos/operadoraCartao.jsf"), diversos);
+        
+        TreeNode endereco = new DefaultTreeNode(new Funcao("Endereço", null), rootCadastros);
+        new DefaultTreeNode("document", new Funcao("País", "/modulos/cadastros/endereco/pais.jsf"), endereco);
+        new DefaultTreeNode("document", new Funcao("Estado", "/modulos/cadastros/endereco/uf.jsf"), endereco);
+        new DefaultTreeNode("document", new Funcao("Município", "/modulos/cadastros/endereco/municipio.jsf"), endereco);
+        new DefaultTreeNode("document", new Funcao("CEP", "/modulos/cadastros/endereco/cep.jsf"), endereco);
+        
+        TreeNode produto = new DefaultTreeNode(new Funcao("Produto", null), rootCadastros);
+        new DefaultTreeNode("document", new Funcao("Marca", "/modulos/cadastros/produto/produtoMarca.jsf"), produto);
+        new DefaultTreeNode("document", new Funcao("NCM", "/modulos/cadastros/produto/ncm.jsf"), produto);
+        new DefaultTreeNode("document", new Funcao("Unidade", "/modulos/cadastros/produto/unidadeProduto.jsf"), produto);
+        new DefaultTreeNode("document", new Funcao("Grupo", "/modulos/cadastros/produto/produtoGrupo.jsf"), produto);
+        new DefaultTreeNode("document", new Funcao("SubGrupo", "/modulos/cadastros/produto/produtoSubGrupo.jsf"), produto);
+        new DefaultTreeNode("document", new Funcao("Produto", "/modulos/cadastros/produto/produto.jsf"), produto);
+        
+        TreeNode financeiro = new DefaultTreeNode(new Funcao("Financeiro", null), rootCadastros);
+        new DefaultTreeNode("document", new Funcao("Banco", "/modulos/cadastros/financeiro/banco.jsf"), financeiro);
+        new DefaultTreeNode("document", new Funcao("Agência Banco", "/modulos/cadastros/financeiro/agenciaBanco.jsf"), financeiro);
+        new DefaultTreeNode("document", new Funcao("Conta Caixa", "/modulos/cadastros/financeiro/contaCaixa.jsf"), financeiro);
+        new DefaultTreeNode("document", new Funcao("Talonário Cheque", "/modulos/cadastros/financeiro/talonarioCheque.jsf"), financeiro);
+        new DefaultTreeNode("document", new Funcao("Cheque", "/modulos/cadastros/financeiro/cheque.jsf"), financeiro);
+        
+        TreeNode tabelas = new DefaultTreeNode(new Funcao("Tabelas", null), rootCadastros);
+        new DefaultTreeNode("document", new Funcao("CFOP", "/modulos/cadastros/tabelas/cfop.jsf"), tabelas);
+        new DefaultTreeNode("document", new Funcao("Feriados", "/modulos/cadastros/tabelas/feriados.jsf"), tabelas);
+        
+        TreeNode vendas = new DefaultTreeNode(new Funcao("Vendas", null), rootVendas);
+        new DefaultTreeNode("document", new Funcao("Tipo de Nota Fiscal", "/modulos/vendas/notaFiscalTipo.jsf"), vendas);
+        new DefaultTreeNode("document", new Funcao("Condições de Pagamento", "/modulos/vendas/condicoesPagamento.jsf"), vendas);
+        new DefaultTreeNode("document", new Funcao("Orçamento", "/modulos/vendas/vendaOrcamentoCabecalho.jsf"), vendas);
+        new DefaultTreeNode("document", new Funcao("Venda", "/modulos/vendas/vendaCabecalho.jsf"), vendas);
+        new DefaultTreeNode("document", new Funcao("Frete", "/modulos/vendas/vendaFrete.jsf"), vendas);
+        new DefaultTreeNode("document", new Funcao("Romaneio de Entrega", "/modulos/vendas/vendaRomaneioEntrega.jsf"), vendas);
         
     }  
   
     public TreeNode getRootNfe() {  
         return rootNfe;  
     }
+    public TreeNode getRootCadastros() {
+		return rootCadastros;
+	}
+    
+    public TreeNode getRootEmpresa() {
+		return rootEmpresa;
+	}
+    public TreeNode getRootVendas() {
+		return rootVendas;
+	}
     
 	public void onNodeSelect(NodeSelectEvent event) {
     	pagina = ((Funcao) event.getTreeNode().getData()).getPagina();

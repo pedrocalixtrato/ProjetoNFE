@@ -1,0 +1,129 @@
+
+<ui:composition template="/WEB-INF/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:t2ti="http://java.sun.com/jsf/composite/t2ti">
+
+	<ui:define name="gridDados">
+		<p:panel style="border: none" header="Empresa"
+			rendered="#{!empresaController.podeConsultar()}">
+			<p:outputLabel value="Você não possui acesso a esta função" />
+		</p:panel>
+
+		<p:outputPanel id="outputPanelGrid">
+
+			<p:outputPanel rendered="#{empresaController.telaGrid}">
+
+				<p:panel id="panelCentroGrid" style="border: none" header="Cliente"
+					rendered="#{clienteController.podeConsultar()}">
+
+					<p:dataTable id="dataTableEmpresa" var="obj"
+						value="#{empresaController.dataModel}" paginator="true"
+						rows="10" rowsPerPageTemplate="5,10,15,20"
+						selection="#{empresaController.objetoSelecionado}"
+						selectionMode="single" resizableColumns="true" lazy="true">
+
+						<f:facet name="header">
+							<p:commandButton title="Novo" icon="ui-icon-plus"
+								actionListener="#{empresaController.incluir}"
+								update=":form1:outputPanelGrid,:form1:outputPanelDetalhe"
+								disabled="#{!empresaController.podeInserir()}" />
+							<p:commandButton process="dataTableEmpresa" title="Detalhes"
+								icon="ui-icon-zoomin"
+								actionListener="#{empresaController.alterar()}"
+								update=":form1:outputPanelGrid,:form1:outputPanelDetalhe"/>
+							<p:commandButton process="dataTableEmpresa" title="Excluir"
+								icon="ui-icon-trash"	
+								actionListener="#{empresaController.excluir}"
+								update=":form1:outputPanelGrid,:form1:outputPanelDetalhe"
+								disabled="#{!empresaController.podeExcluir()}">
+								<p:confirm header="Confirmação" message="Confirma Exclusão?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+						</f:facet>
+						
+						<p:column width="30" headerText="Nome Fantasia" filterBy="#{obj.nomeFantasia}">
+							<h:outputLabel value="#{obj.nomeFantasia}" />
+						</p:column>	
+						<p:column headerText="Razao Social" width="150">
+							<h:outputLabel value="#{obj.razaoSocial}" />
+						</p:column>								
+						
+					</p:dataTable>
+				</p:panel>
+			</p:outputPanel>
+
+		</p:outputPanel>
+
+	</ui:define>
+	<ui:define name="telaInclusaoAlteracao">
+
+		<p:outputPanel id="outputPanelDetalhe">
+
+			<p:outputPanel id="panelProdutoDetalhe"
+				rendered="#{!empresaController.telaGrid}">
+				<p:panel id="panelCentroDetalhe" style="border: none"
+					header="Empresa">
+
+					<p:outputLabel value="Nenhum registro selecionado."
+						rendered="#{empty empresaController.objeto}" />
+					<p:commandButton value="Voltar"
+						actionListener="#{empresaController.voltar()}"
+						update=":form1:outputPanelGrid,:form1:outputPanelDetalhe"
+						rendered="#{empty empresaController.objeto}" />
+
+					<p:outputPanel rendered="#{not empty empresaController.objeto}">
+					
+						<t2ti:campoTexto styleClass="t2ti-campo-50"
+							idComponente="empresaNome" label="Nome Fantasia"
+							nomeAtributo="#{empresaController.objeto.nomeFantasia}"
+							tamanhoMaximo="100" requerido="true" />
+						<t2ti:campoTexto styleClass="t2ti-campo-50"
+							idComponente="empresaRazao" label="Razão Social"
+							nomeAtributo="#{empresaController.objeto.razaoSocial}"
+							tamanhoMaximo="30" requerido="true" />
+
+						<t2ti:campoTexto styleClass="t2ti-campo-20"
+							idComponente="empresaCRT" label="CRT"
+							nomeAtributo="#{empresaController.objeto.crt}"
+							tamanhoMaximo="14" requerido="true" />
+						<t2ti:campoTexto styleClass="t2ti-campo-30"
+							idComponente="empresaCNPJ" label="CNPJ"
+							nomeAtributo="#{empresaController.objeto.cnpj}"
+							tamanhoMaximo="60" />
+						<t2ti:campoTexto styleClass="t2ti-campo-10"
+							idComponente="empresaIE" label="Incrição Estadual"
+							nomeAtributo="#{empresaController.objeto.inscricaoEstadual}" tamanhoMaximo="10" />
+						
+					</p:outputPanel>
+					<p:outputPanel rendered="#{not empty empresaController.objeto}"
+						styleClass="t2ti-campo-100">
+
+						<p:commandButton value="Incluir"
+							rendered="#{empty empresaController.objeto.id}"
+							actionListener="#{empresaController.salvar}"
+							update=":form1:growl,:form1:outputPanelGrid,:form1:outputPanelDetalhe"
+							disabled="#{!empresaController.podeInserir()}" />
+						<p:commandButton value="Alterar"
+							rendered="#{not empty empresaController.objeto.id}"
+							actionListener="#{empresaController.salvar}"
+							update=":form1:growl,:form1:outputPanelGrid,:form1:outputPanelDetalhe"
+							disabled="#{!empresaController.podeAlterar()}" />
+						<p:commandButton value="Fechar"
+							actionListener="#{empresaController.voltar()}"
+							update=":form1:outputPanelGrid,:form1:outputPanelDetalhe"
+							process="@this" />
+
+					</p:outputPanel>
+				</p:panel>
+			</p:outputPanel>
+
+		</p:outputPanel>
+
+	</ui:define>
+	
+</ui:composition>

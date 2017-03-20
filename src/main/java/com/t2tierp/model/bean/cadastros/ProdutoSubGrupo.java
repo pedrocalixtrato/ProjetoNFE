@@ -41,7 +41,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "PRODUTO_SUB_GRUPO")
+@Table(name = "PRODUTO_SUBGRUPO")
 public class ProdutoSubGrupo implements Serializable {
 
     private static final long serialVersionUID = 1L;
